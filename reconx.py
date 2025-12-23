@@ -38,7 +38,7 @@ def banner():
         "██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║██╔╝ ██╗\n"
         "╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝\n"
     )
-    animate_text("A personal recon framework I built while hunting bugs and reading JavaScript.\n")
+    animate_text("A personal recon framework I built while hunting bugs and reading JavaScript.\n" , delay=0.03)
     animate_text("Built by Purushotham R\n", delay=0.04)
 
 # ---------------- LOGGING ----------------
