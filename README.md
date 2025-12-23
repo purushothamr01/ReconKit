@@ -61,7 +61,7 @@ Clean startup animation — because terminal UX matters
 
 1️⃣ Clone the repository
 ```bash
-https://github.com/purushothamr01/ReconX.git
+git clone https://github.com/purushothamr01/ReconX.git
 cd reconx
 ```
 
