@@ -17,7 +17,7 @@ Just the workflow that worked for me — automated, refined, and battle‑tested
 Crafted in terminals, tested on real targets.
 Built by Purushotham R
 
-🧠 Why ReconX?
+## 🧠 Why ReconX?
 
 Most recon tools run everything and drown you in noise.
 ReconX focuses on signal over volume.
@@ -29,8 +29,9 @@ Scan what matters, not everything
 Keep recon fast, clean, and repeatable
 
 Stay close to real bug bounty workflows
+---
 
-🚀 Features
+## 🚀 Features
 
 🔍 Subdomain Enumeration
 Uses Amass, Subfinder, Sublist3r, DNSrecon
