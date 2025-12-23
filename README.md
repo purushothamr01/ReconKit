@@ -30,3 +30,51 @@
 - 🎨 Animated ASCII banner on startup  
 
 
+## ⚙️ Installation
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/yourusername/reconx.git
+cd reconx
+Make executable:
+
+bash
+Copy code
+chmod +x reconx.py
+(Optional) Install as system command:
+
+bash
+Copy code
+sudo ln -s $(pwd)/reconx.py /usr/local/bin/reconx
+Install Python requirements:
+
+bash
+Copy code
+pip3 install -r requirements.txt
+Make sure all recon tools are installed and in $PATH:
+
+powershell
+Copy code
+amass, subfinder, sublist3r, dnsrecon, httpx, nuclei
+▶️ Usage Examples
+Full recon:
+bash
+Copy code
+reconx -d example.com --all
+Subdomains only:
+bash
+Copy code
+reconx -d example.com --subs
+Subdomains + live hosts:
+bash
+Copy code
+reconx -d example.com --subs --live
+JS + Nuclei scan:
+bash
+Copy code
+reconx -d example.com --js --nuclei
+Update ReconX:
+bash
+Copy code
+reconx --update
