@@ -1,133 +1,161 @@
-# ReconX 🔎
-### A Personal Reconnaissance Framework for Bug Bounty
+# ReconKit 🔎
+### Personal Reconnaissance Framework for Bug Bounty
 
-    ██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗██╗  ██╗
-    ██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗  ██║╚██╗██╔╝
-    ██████╔╝█████╗  ██║     ██║   ██║██╔██╗ ██║ ╚███╔╝ 
-    ██╔══██╗██╔══╝  ██║     ██║   ██║██║╚██╗██║ ██╔██╗ 
-    ██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║██╔╝ ██╗
-    ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝
+    ██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗██╗  ██╗██╗████████╗
+    ██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗  ██║██║ ██╔╝██║╚══██╔══╝
+    ██████╔╝█████╗  ██║     ██║   ██║██╔██╗ ██║█████╔╝ ██║   ██║   
+    ██╔══██╗██╔══╝  ██║     ██║   ██║██║╚██╗██║██╔═██╗ ██║   ██║  
+    ██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║██║  ██╗██║   ██║ 
+    ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝   ╚═╝
 
     
+**A personal recon framework built while hunting bugs and reading JavaScript.**
+**Crafted with code & curiosity by Purushotham R**
+**Designed for ethical hackers, bug bounty hunters, and security researchers.**
 
-A personal recon framework I built while hunting bugs, breaking apps, and actually reading JavaScript.
-Not a wrapper. Not a copy.
-Just the workflow that worked for me — automated, refined, and battle‑tested.
 
-Crafted in terminals, tested on real targets.
-Built by Purushotham R
-
-## 🧠 Why ReconX?
-
-Most recon tools run everything and drown you in noise.
-ReconX focuses on signal over volume.
-
-Read JavaScript, don’t ignore it
-
-Scan what matters, not everything
-
-Keep recon fast, clean, and repeatable
-
-Stay close to real bug bounty workflows
 ---
+
 
 ## 🚀 Features
 
-🔍 Subdomain Enumeration
-Uses Amass, Subfinder, Sublist3r, DNSrecon
 
-🌐 Live Host Detection
-Fast probing via httpx
+- 🔍 Multi-tool subdomain enumeration (Amass, Subfinder, Sublist3r, DNSrecon)
+- 🌐 Live host detection via httpx
+- 📜 Real-time JavaScript endpoint extraction
+- 🧪 Nuclei smart template scanning (low-noise, targeted)
+- 🔄 Modular & upgradeable design
+- 🖥️ Parallel execution for faster recon
+- 📂 Scope file support
+- ⚡ Reflected parameter detection
 
-📜 Real JavaScript Endpoint Extraction
-Parses JS files to extract hidden endpoints & params
 
-🧪 Smart Nuclei Scanning
-Runs only relevant templates to reduce noise
+---
+## ⚙️ Installation
 
-⚡ Parallel Execution
-Faster recon without melting your system
 
-📂 Scope File Support
-Stay in scope, always
+1️⃣ **Clone the repo**
 
-🔄 Self Update Mechanism
-Update ReconX without reinstalling
 
-🎨 Animated ASCII Banner
-Clean startup animation — because terminal UX matters
-
-# ⚙️ Installation
-
-1️⃣ Clone the repository
 ```bash
-git clone https://github.com/purushothamr01/ReconX.git
-cd ReconX
+git clone https://github.com/purushothamr01/reconkit.git
+cd ReconKit
 ```
 
-2️⃣ Make executable
+2️⃣ Make the main script executable
 ```bash
-chmod +x reconx.py
+chmod +x reconkit.py
 ```
-
-3️⃣ Optional: install as system command
+3️⃣ (Optional) Install as a system command
 ```bash
-sudo ln -s $(pwd)/reconx.py /usr/local/bin/reconx
+sudo ln -s $(pwd)/reconkit.py /usr/local/bin/reconkit
 ```
-
 4️⃣ Install Python dependencies
 ```bash
-pipx install -r requirements.txt
+pip3 install -r requirements.txt
 ```
-
 5️⃣ Required external tools
+
+Make sure the following tools are installed and available in your $PATH:
 ```bash
 amass subfinder sublist3r dnsrecon httpx nuclei
 ```
-### ▶️ Usage Examples
+## ▶️ Usage Examples
 
- Full recon
-
+🔧 Basic Syntax
 ```bash
-reconx -d example.com --all
+reconkit -d <domain> [options]
+```
+🚀 Common Usage Commands
+
+🔹 Full Recon (recommended)
+
+Runs all major modules together.
+```bash
+reconkit -d example.com --all
+```
+🔹 Subdomain Enumeration Only
+
+Uses Amass, Subfinder, Sublist3r, DNSrecon.
+```bash
+reconkit -d example.com --subs
 ```
 
-Subdomain enumeration only
+🔹 Subdomains + Live Host Detection
 ```bash
-reconx -d example.com --subs
+reconkit -d example.com --subs --live
+```
+🔹 JavaScript Recon (Endpoints & Params)
+```bash
+reconkit -d example.com --js
+```
+🔹 JavaScript + Nuclei Smart Scan
+```bash
+reconkit -d example.com --js --nuclei
+```
+🔹 Reflected Parameter Detection
+```bash
+reconkit -d example.com --reflected
+```
+🔹 Use Scope File (Bug Bounty Safe)
+```bash
+reconkit -d example.com --all --scope scope.txt
 ```
 
-Subdomains + live hosts
+📄 scope.txt example:
 ```bash
-reconx -d example.com --subs --live
+example.com
+api.example.com
+*.example.com
 ```
-
-JS + Nuclei scan
+🔹 Custom Output Directory
 ```bash
-reconx -d example.com --js --nuclei
+reconkit -d example.com --all -o recon-output
 ```
-
-Update ReconX
+🔹 Update ReconKit
 ```bash
-reconx --update
+reconkit --update
 ```
+🔹 Show Help Menu
+```bash
+reconkit -h
+```
+🔹 Show Man Page (Pro Mode 😎)
+```bash
+reconkit --man
+```
+🧠 Real Bug Bounty Workflow (Recommended)
+```bash
+reconkit -d example.com --subs --live
+```
+```bash
+reconkit -d example.com --js
+```
+```bash
+reconkit -d example.com --nuclei
+```
+📂 Output Structure
 
-## 🛠 Troubleshooting
+After a run, you’ll see:
+```bash
+output/
+└── example.com/
+    ├── subdomains.txt
+    ├── live_hosts.txt
+    ├── js_endpoints.txt
+    ├── nuclei_results.txt
+    ├── reflected_params.txt
+```
+🛠 Troubleshooting
 
-Command not found → Ensure all tools (amass, subfinder, sublist3r, dnsrecon, httpx, nuclei) are installed and in $PATH.
+Command not found → Ensure required tools are installed and in $PATH.
 
-Permission denied → Run chmod +x reconx.py and/or use sudo.
+Permission denied → Run chmod +x reconkit.py and/or use sudo.
 
 Python dependency issues → Run pip3 install -r requirements.txt.
 
 Missing outputs → Confirm subdomain enumeration completed successfully.
 
-JS / Reflected modules not working → Check network connectivity and target accessibility.
+# ⭐ Notes
 
-### 📘 Manual Page
-
-ReconX includes a full man page:
-
-```bash
-man reconx
-```
+ReconKit does not find bugs for you. It saves time and reduces noise so you can focus on analysis. Use responsibly and only on authorized targets.
