@@ -123,3 +123,11 @@ Python dependency issues → Run pip3 install -r requirements.txt.
 Missing outputs → Confirm subdomain enumeration completed successfully.
 
 JS / Reflected modules not working → Check network connectivity and target accessibility.
+
+### 📘 Manual Page
+
+ReconX includes a full man page:
+
+```bash
+man reconx
+```
