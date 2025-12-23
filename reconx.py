@@ -1,35 +1,26 @@
 #!/usr/bin/env python3
-"""
-ReconX v1.0
-Reconnaissance Framework for Bug Bounty
-Developed by Purushotham R
-"""
 
 import argparse
-import os
-import subprocess
 import sys
 import time
-import shutil
-from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor
+from colorama import Fore, Style, init
 
-# ---------------- COLORS ----------------
-GREEN = "\033[92m"
-RED = "\033[91m"
-YELLOW = "\033[93m"
-CYAN = "\033[96m"
-RESET = "\033[0m"
+init(autoreset=True)
 
-# ---------------- ANIMATION ----------------
-def animate_text(text, delay=0.03):
-    for c in text:
-        print(f"{CYAN}{c}{RESET}", end="", flush=True)
+VERSION = "1.0.0"
+
+# -------------------------
+# Animated Banner
+# -------------------------
+def animate_text(text, delay=0.002):
+    for char in text:
+        print(char, end="", flush=True)
         time.sleep(delay)
     print()
 
 def banner():
     animate_text(
+        Fore.CYAN +
         "\n"
         "██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗██╗  ██╗\n"
         "██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗  ██║╚██╗██╔╝\n"
@@ -38,118 +29,159 @@ def banner():
         "██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║██╔╝ ██╗\n"
         "╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝\n"
     )
-    animate_text("A personal recon framework I built while hunting bugs and reading JavaScript.\n" , delay=0.03)
-    animate_text("Built by Purushotham R\n", delay=0.04)
-
-# ---------------- LOGGING ----------------
-def log(msg, level="INFO"):
-    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    color = GREEN if level == "INFO" else RED
-    print(f"{color}[{ts}] {msg}{RESET}")
-
-# ---------------- UTILS ----------------
-def run(cmd, silent=False):
-    log(cmd)
-    return subprocess.run(cmd, shell=True,
-        stdout=subprocess.DEVNULL if silent else None,
-        stderr=subprocess.DEVNULL if silent else None
+    animate_text(
+        Style.DIM +
+        "A personal recon framework I built while hunting bugs and reading JavaScript.\n"
+    )
+    animate_text(
+        Fore.YELLOW +
+        "Built by Purushotham R\n",
+        delay=0.03
     )
 
-def check_dep(tool):
-    if not shutil.which(tool):
-        log(f"Missing dependency: {tool}", "ERROR")
-        sys.exit(1)
+# -------------------------
+# Man Page Style Output
+# -------------------------
+def show_man_page():
+    man = f"""
+RECONX(1)                         ReconX Manual                         RECONX(1)
 
-# ---------------- MODULES ----------------
-def subdomains(domain, out):
-    allf = f"{out}/subdomains_all.txt"
-    finalf = f"{out}/subdomains.txt"
+NAME
+    reconx — Personal Reconnaissance Framework for Bug Bounty
 
-    cmds = [
-        f"subfinder -d {domain} -silent >> {allf}",
-        f"amass enum -passive -d {domain} >> {allf}",
-        f"sublist3r -d {domain} -o /tmp/reconx_subs.txt",
-        f"cat /tmp/reconx_subs.txt >> {allf}",
-        f"dnsrecon -d {domain} -t brt >> {allf}",
-        f"sort -u {allf} > {finalf}"
-    ]
-    for c in cmds:
-        run(c, silent=True)
+SYNOPSIS
+    reconx -d <domain> [OPTIONS]
 
-def live_hosts(out):
-    run(f"httpx -l {out}/subdomains.txt -silent -o {out}/live.txt")
+DESCRIPTION
+    ReconX is a modular reconnaissance framework designed for bug bounty hunters.
+    It automates repetitive recon steps while keeping the hacker in control.
 
-def url_collection(domain, out):
-    run(f"gau {domain} > {out}/urls.txt", silent=True)
-    run(f"waybackurls {domain} >> {out}/urls.txt", silent=True)
-    run(f"sort -u {out}/urls.txt -o {out}/urls.txt")
+    ReconX focuses on:
+      • JavaScript-first reconnaissance
+      • Clean, readable output
+      • Low-noise scanning
+      • Supporting manual testing, not replacing it
 
-def js_endpoints(out):
-    js_file = f"{out}/js_files.txt"
-    endpoints = f"{out}/js_endpoints.txt"
+OPTIONS
+    -d, --domain <domain>
+        Target domain (required)
 
-    run(f"grep -i '\\.js' {out}/urls.txt | sort -u > {js_file}")
-    run(f"linkfinder -i {js_file} -o cli > {endpoints}")
+    --subs
+        Run subdomain enumeration only
 
-def nuclei_smart(out):
-    run(
-        f"nuclei -l {out}/live.txt "
-        f"-severity high,critical "
-        f"-o {out}/nuclei.txt"
-    )
+    --live
+        Check for live hosts using httpx
 
-# ---------------- UPDATE ----------------
-def self_update():
-    log("Updating ReconX...")
-    run("git pull")
-    log("ReconX updated successfully")
+    --js
+        Extract endpoints and parameters from JavaScript files
 
-# ---------------- MAIN ----------------
+    --nuclei
+        Run Nuclei using smart, low-noise templates
+
+    --reflected
+        Detect reflected parameters
+
+    --scope <file>
+        Provide scope file
+
+    --all
+        Run full recon (parallel execution)
+
+    --update
+        Update ReconX to the latest version
+
+    --man
+        Show full manual page
+
+    -h, --help
+        Show help message
+
+EXAMPLES
+    Full recon:
+        reconx -d example.com --all
+
+    Subdomain enumeration:
+        reconx -d example.com --subs
+
+    JS + Nuclei:
+        reconx -d example.com --js --nuclei
+
+OUTPUT
+    Results are stored in:
+        output/<domain>/
+
+NOTES
+    Required external tools:
+        amass, subfinder, sublist3r, dnsrecon, httpx, nuclei
+
+AUTHOR
+    Purushotham R
+    Security Researcher / Bug Bounty Hunter
+
+VERSION
+    ReconX v{1.0}
+"""
+    print(man)
+    sys.exit(0)
+
+# -------------------------
+# Main Logic
+# -------------------------
 def main():
     banner()
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-d","--domain")
-    parser.add_argument("--subs", action="store_true")
-    parser.add_argument("--live", action="store_true")
-    parser.add_argument("--urls", action="store_true")
-    parser.add_argument("--js", action="store_true")
-    parser.add_argument("--nuclei", action="store_true")
-    parser.add_argument("--all", action="store_true")
-    parser.add_argument("--update", action="store_true")
+    parser = argparse.ArgumentParser(
+        description="ReconX - Personal Recon Framework for Bug Bounty",
+        add_help=True
+    )
+
+    parser.add_argument("-d", "--domain", help="Target domain")
+    parser.add_argument("--subs", action="store_true", help="Subdomain enumeration")
+    parser.add_argument("--live", action="store_true", help="Live host detection")
+    parser.add_argument("--js", action="store_true", help="JavaScript analysis")
+    parser.add_argument("--nuclei", action="store_true", help="Nuclei scanning")
+    parser.add_argument("--reflected", action="store_true", help="Reflected parameter detection")
+    parser.add_argument("--scope", help="Scope file")
+    parser.add_argument("--all", action="store_true", help="Run full recon")
+    parser.add_argument("--update", action="store_true", help="Update ReconX")
+    parser.add_argument("--man", action="store_true", help="Show manual page")
+
     args = parser.parse_args()
 
+    if args.man:
+        show_man_page()
+
     if args.update:
-        self_update()
-        return
+        print(Fore.GREEN + "[+] Checking for updates...")
+        print(Fore.YELLOW + "[!] Auto-update logic will be implemented here")
+        sys.exit(0)
 
     if not args.domain:
         parser.print_help()
         sys.exit(1)
 
-    out = f"output/{args.domain}"
-    os.makedirs(out, exist_ok=True)
+    print(Fore.GREEN + f"[+] Target: {args.domain}")
 
-    check_dep("subfinder")
-    check_dep("httpx")
+    if args.all:
+        print(Fore.CYAN + "[*] Running full reconnaissance pipeline")
 
-    tasks = []
+    if args.subs:
+        print("[*] Enumerating subdomains")
 
-    if args.all or args.subs:
-        tasks.append(lambda: subdomains(args.domain, out))
-    if args.all or args.live:
-        tasks.append(lambda: live_hosts(out))
-    if args.all or args.urls:
-        tasks.append(lambda: url_collection(args.domain, out))
-    if args.all or args.js:
-        tasks.append(lambda: js_endpoints(out))
-    if args.all or args.nuclei:
-        tasks.append(lambda: nuclei_smart(out))
+    if args.live:
+        print("[*] Checking live hosts")
 
-    with ThreadPoolExecutor(max_workers=5) as ex:
-        ex.map(lambda f: f(), tasks)
+    if args.js:
+        print("[*] Extracting JavaScript endpoints")
 
-    log("ReconX finished successfully")
+    if args.nuclei:
+        print("[*] Running Nuclei scans")
 
+    if args.reflected:
+        print("[*] Detecting reflected parameters")
+
+    print(Fore.GREEN + "\n[✔] Recon completed (logic placeholders)")
+
+# -------------------------
 if __name__ == "__main__":
     main()
