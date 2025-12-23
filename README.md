@@ -1,6 +1,5 @@
 # ReconX 🔎  
-### A personal Reconnaissance Framework for Bug Bounty
-
+### A Personal Reconnaissance Framework for Bug Bounty
 
     "██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗██╗  ██╗\n"
     "██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗  ██║╚██╗██╔╝\n"
@@ -9,72 +8,111 @@
     "██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║██╔╝ ██╗\n"
     "╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝\n"
 
+    
 **A personal recon framework I built while hunting bugs and reading JavaScript.**  
 **Built with love & code by Purushotham R**  
 **Reconnaissance Framework for Bug Bounty**
 
 ---
 
+## 🧠 Why ReconX?
+
+Most recon tools either create **too much noise** or hide everything behind automation.  
+ReconX was built to stay **close to the workflow of a real bug bounty hunter**.
+
+The goal is simple:
+
+> Reduce repetition.  
+> Keep outputs readable.  
+> Leave space for manual thinking.
+
+ReconX helps you find **attack surface**, not fake confidence.
+
+---
+
 ## 🚀 Features
 
-- 🔍 Subdomain enumeration using multiple tools: Amass, Subfinder, Sublist3r, DNSrecon  
-- 🌐 Live host detection via httpx  
-- 📜 JavaScript endpoint extraction (real-time parsing)  
-- 🧪 Nuclei smart template scanning (low-noise, targeted)  
-- 🔄 Upgradeable & modular design  
-- 🖥️ Parallel execution for faster results  
+- 🔍 Subdomain enumeration using:
+  - Amass
+  - Subfinder
+  - Sublist3r
+  - DNSrecon
+- 🌐 Live host detection using httpx  
+- 📜 JavaScript endpoint extraction (real-world parsing)  
+- 🧪 Smart Nuclei scanning (low-noise, targeted templates)  
+- ⚡ Parallel execution for faster recon  
 - 📂 Scope file support  
-- ⚡ Reflected parameter detection  
+- 🔎 Reflected parameter detection  
 - 📢 Optional Slack / Discord notifications  
-- 🕒 Logs with timestamps  
-- 🎨 Animated ASCII banner on startup  
+- 🕒 Timestamped logs  
+- 🎨 Animated ASCII banner in terminal  
+- 🔄 Upgradeable & modular design  
 
+---
+
+## 🧱 Project Structure
+reconx/
+├── reconx.py # Main CLI entry
+├── modules/ # Recon modules
+│ ├── subdomains.py
+│ ├── live_hosts.py
+│ ├── js_analysis.py
+│ ├── nuclei_scan.py
+│ └── reflected_params.py
+├── utils/
+│ ├── runner.py
+│ └── logger.py
+├── output/
+│ └── example.com/
+├── reconx_config.cfg
+└── README.md
+
+
+Simple. Modular. Easy to extend.
+
+---
 
 ## ⚙️ Installation
 
-1. Clone the repo:
+### 1️⃣ Clone the repository
 
-```bash
+
 git clone https://github.com/yourusername/reconx.git
 cd reconx
-Make executable:
 
-bash
-Copy code
+### 2️⃣ Make the script executable
+
 chmod +x reconx.py
-(Optional) Install as system command:
-
-bash
-Copy code
+3️⃣ (Optional) Install as a system command
 sudo ln -s $(pwd)/reconx.py /usr/local/bin/reconx
-Install Python requirements:
 
-bash
-Copy code
+4️⃣ Install Python dependencies
 pip3 install -r requirements.txt
-Make sure all recon tools are installed and in $PATH:
 
-powershell
-Copy code
-amass, subfinder, sublist3r, dnsrecon, httpx, nuclei
+5️⃣ Required external tools
+
+Make sure these tools are installed and available in your $PATH:
+
+amass
+subfinder
+sublist3r
+dnsrecon
+httpx
+nuclei
+
 ▶️ Usage Examples
-Full recon:
-bash
-Copy code
+Full recon
 reconx -d example.com --all
-Subdomains only:
-bash
-Copy code
+
+Subdomain enumeration only
 reconx -d example.com --subs
-Subdomains + live hosts:
-bash
-Copy code
+
+Subdomains + live hosts
 reconx -d example.com --subs --live
-JS + Nuclei scan:
-bash
-Copy code
+
+JavaScript + Nuclei scan
 reconx -d example.com --js --nuclei
-Update ReconX:
-bash
-Copy code
+
+Update ReconX
 reconx --update
+
