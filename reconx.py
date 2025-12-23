@@ -38,8 +38,8 @@ def banner():
         "██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║██╔╝ ██╗\n"
         "╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝\n"
     )
-    animate_text("Reconnaissance Framework for Bug Bounty\n")
-    animate_text("Developed by Purushotham R\n", delay=0.08)
+    animate_text("A personal recon framework I built while hunting bugs and reading JavaScript.\n")
+    animate_text("Built by Purushotham R\n", delay=0.04)
 
 # ---------------- LOGGING ----------------
 def log(msg, level="INFO"):
